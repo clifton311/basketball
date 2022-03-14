@@ -3,6 +3,7 @@ import TeamTable from './components/Table';
 import { Spinner } from 'react-bootstrap';
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
+
 import './App.css';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
   const [openPanel, setOpenPanel] = useState(false);
 
   const [teamInfo, setTeamInfo] = useState([]);
-  const [games, setGames] = useState([]);
+  const [game, setGame] = useState([]);
 
   const baseUrl = `https://www.balldontlie.io/api/v1/`;
 
@@ -45,8 +46,8 @@ function App() {
     );
     const json = await response.json();
     return Promise.all([json]).then((values) => {
-      console.log('games', values);
-      setGames(values);
+      let randomGame = values[0].data[getRandomNum(1, values[0].data.length)];
+      setGame(randomGame);
     });
   };
 
@@ -82,6 +83,9 @@ function App() {
       </>
     );
 
+  console.log('game', game);
+  console.log('teamInfo', teamInfo);
+
   return (
     <div className="App">
       <h1>NBA Teams</h1>
@@ -91,49 +95,37 @@ function App() {
       <br></br>
 
       <TeamTable teams={teams} labels={labels} handlePanel={handlePanel} />
-      <SlidingPanel type={'right'} isOpen={openPanel} size={40}>
-        <div className="sliding-panel">
-          <div className="sliding-panel-header">
-            <p>Team Name</p>{' '}
-            <span>
-              <i>X</i>
-            </span>
+      {/* <SlidingPanel
+        openPanel={openPanel}
+        game={game}
+        setOpenPanel={setOpenPanel}
+      /> */}
+
+      {game && (
+        <SlidingPanel type={'right'} isOpen={openPanel} size={40}>
+          <div className="sliding-panel">
+            <div className="sliding-panel-header">
+              <h3>{teamInfo[0]?.name} </h3> <div>X</div>
+            </div>
+            <p>Team Full Name: {teamInfo && teamInfo[0]?.full_name}</p>
+
+            <p>Total Games in 2021: </p>
+
+            <h3>Random Game Details</h3>
+            <div className="random_game_details">
+              <div>Date: {game?.date}</div>
+              <div>Home Team: {game?.home_team?.name}</div>
+              <div>Home Team Score: {game?.home_team_score}</div>
+              <div>Vistor Team: {game?.visitor_team?.name}</div>
+              <div>Vistor Team Score: {game?.visitor_team_score}</div>
+            </div>
+
+            <button onClick={() => setOpenPanel(false)}>Close</button>
+
+            <div className="random-details"></div>
           </div>
-
-          <p>Team Full Name :</p>
-
-          <p>Total Games in 2021: </p>
-
-          <h3>Random Game Details</h3>
-          <div className="random_game_details">
-            Date: {games[0]?.data && Date.parse(games[0]?.data[getRandomNum(1, 25)].date)}
-            <h3>
-              Home Team:{' '}
-              {games[0]?.data &&
-                games[0].data[getRandomNum(1, 25)].home_team.name}
-            </h3>
-            <h3>
-              Home Team Score:{' '}
-              {games[0]?.data &&
-                games[0]?.data[getRandomNum(1, 25)].home_team_score}
-            </h3>
-            <h3>
-              Vistor Team:{' '}
-              {games[0]?.data &&
-                games[0].data[getRandomNum(1, 25)].visitor_team.name}
-            </h3>
-            <h3>
-              Vistor Team Score:{' '}
-              {games[0].data &&
-                games[0].data[getRandomNum(1, 25)].visitor_team_score}
-            </h3>
-          </div>
-
-          <button onClick={() => setOpenPanel(false)}>Close</button>
-
-          <div className="random-details"></div>
-        </div>
-      </SlidingPanel>
+        </SlidingPanel>
+      )}
     </div>
   );
 }
