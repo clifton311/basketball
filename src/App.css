@@ -25,23 +25,51 @@
 } 
 
 .random_game_details {
+
+   padding-left: 5rem;
+  font-size: large;
+  padding-bottom: 5rem
+}
+
+
+.random_game_items  {
+  
+ display:flex;
+ flex-direction: row;
+}
+.random_game_items > div {
+
+ margin-left: 5px
+}
+
+.random_game_details div {
   display:flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: space-around;
+ 
+  font-size: large;
+  padding-bottom: 5rem
 }
 
 .sliding-panel {
   border: 1px solid black;
   height: 100%;
-  background-color: grey;
-  padding-left: 5rem;
+  background-color: white;
+ 
 }
 
 .sliding-panel p {
   display:flex;
   flex-direction: column;
   align-items: flex-start;
+   padding-left: 5rem;
 
+}
+
+.sliding-panel h3 {
+  text-align: left;
+   padding-left: 5rem;
 }
 
 .sliding-panel-header {
@@ -51,6 +79,12 @@
   background-color: darkgray;
   text-align: left;
 }
+
+.x{
+  cursor: pointer;
+  margin-right:25px;
+}
+
 
 
 

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import TeamTable from './components/Table';
+import TeamsPagination from './components/Pagination';
 import { Spinner } from 'react-bootstrap';
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
-
 import './App.css';
+
+const pageSize = 5;
 
 function App() {
   const [teams, setTeams] = useState([]);
@@ -13,6 +15,9 @@ function App() {
 
   const [teamInfo, setTeamInfo] = useState([]);
   const [game, setGame] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [teamsPerPage, setTeamsPerPage] = useState(5);
 
   const baseUrl = `https://www.balldontlie.io/api/v1/`;
 
@@ -86,41 +91,60 @@ function App() {
   console.log('game', game);
   console.log('teamInfo', teamInfo);
 
+  const indexOfLastTeam = currentPage * teamsPerPage;
+  const indexOfFirstTeam = indexOfLastTeam - teamsPerPage;
+  const currentTeams = teams.slice(indexOfFirstTeam, indexOfLastTeam);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  console.log('teams', currentTeams);
+   console.log('teams', indexOfLastTeam);
+    console.log('teams', indexOfFirstTeam);
+
   return (
     <div className="App">
       <h1>NBA Teams</h1>
-      <label>Search Team</label>
-      <input type="text"></input>
 
-      <br></br>
+      <div>
+        <label>Search Team</label>
+        <input type="text"></input>
+      </div>
 
-      <TeamTable teams={teams} labels={labels} handlePanel={handlePanel} />
-      {/* <SlidingPanel
-        openPanel={openPanel}
-        game={game}
-        setOpenPanel={setOpenPanel}
-      /> */}
+      <TeamTable
+        teams={currentTeams}
+        labels={labels}
+        handlePanel={handlePanel}
+      />
+
+      <TeamsPagination
+        teamsPerPage={currentTeams}
+        totalTeams={teams.length}
+        paginate={paginate}
+      />
 
       {game && (
-        <SlidingPanel type={'right'} isOpen={openPanel} size={40}>
+        <SlidingPanel type={'right'} isOpen={openPanel} size={50}>
           <div className="sliding-panel">
             <div className="sliding-panel-header">
-              <h3>{teamInfo[0]?.name} </h3> <div>X</div>
+              <h3>{teamInfo[0]?.name} </h3>{' '}
+              <div className="x" onClick={() => setOpenPanel(false)}>
+                <b>X</b>
+              </div>
             </div>
+
             <p>Team Full Name: {teamInfo && teamInfo[0]?.full_name}</p>
 
-            <p>Total Games in 2021: </p>
+            <p>Total Games in 2021: {game.length}</p>
 
             <h3>Random Game Details</h3>
             <div className="random_game_details">
-              <div>Date: {game?.date}</div>
+              <div className="random_game_items">
+                Date: <div>{game?.date?.split('T')[0]}</div>
+              </div>
               <div>Home Team: {game?.home_team?.name}</div>
               <div>Home Team Score: {game?.home_team_score}</div>
               <div>Vistor Team: {game?.visitor_team?.name}</div>
               <div>Vistor Team Score: {game?.visitor_team_score}</div>
             </div>
-
-            <button onClick={() => setOpenPanel(false)}>Close</button>
 
             <div className="random-details"></div>
           </div>
