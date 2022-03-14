@@ -20,3 +20,8 @@ tr:hover{
   background-color: aqua;
 }
 
+.paginate {
+  display: flex;
+  justify-items: flex-end
+}
+

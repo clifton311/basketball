@@ -15,9 +15,14 @@ function App() {
 
   const [teamInfo, setTeamInfo] = useState([]);
   const [game, setGame] = useState([]);
+  const [totalGames, setTotalGames] = useState(0)
 
+  //state for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [teamsPerPage, setTeamsPerPage] = useState(5);
+
+  //state for search
+  const [searchTerm, setSearchTerm] = useState('');
 
   const baseUrl = `https://www.balldontlie.io/api/v1/`;
 
@@ -42,7 +47,7 @@ function App() {
   const getRandomNum = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    return Math.floor(Math.random() * (max - min) + min); 
   };
 
   const getRandomGame = async (teamID, season = '2021') => {
@@ -50,8 +55,10 @@ function App() {
       `https://www.balldontlie.io/api/v1/games/?seasons[]=${season}&team_ids[]=${teamID}`
     );
     const json = await response.json();
-    return Promise.all([json]).then((values) => {
-      let randomGame = values[0].data[getRandomNum(1, values[0].data.length)];
+    return Promise.all([json]).then((games) => {
+      setTotalGames(games[0].meta.total_count)
+
+      let randomGame = games[0].data[getRandomNum(1, games[0].data.length)];
       setGame(randomGame);
     });
   };
@@ -65,7 +72,8 @@ function App() {
   const labels = [
     'ID',
     'Team Name',
-    'City, Abbreviation',
+    'City',
+    'Abbreviation',
     'Conference',
     'Division',
   ];
@@ -91,14 +99,22 @@ function App() {
   console.log('game', game);
   console.log('teamInfo', teamInfo);
 
+
+  /////////////////// Pagination Logic //////////////
   const indexOfLastTeam = currentPage * teamsPerPage;
   const indexOfFirstTeam = indexOfLastTeam - teamsPerPage;
-  const currentTeams = teams.slice(indexOfFirstTeam, indexOfLastTeam);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const filteredCurrentTeams = teams
+    .filter((val) => {
+      if (searchTerm === '') {
+        return val;
+      } else if (val.full_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return val
+      }
+    })
+    .slice(indexOfFirstTeam, indexOfLastTeam);
+    console.log(filteredCurrentTeams)
 
-  console.log('teams', currentTeams);
-   console.log('teams', indexOfLastTeam);
-    console.log('teams', indexOfFirstTeam);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="App">
@@ -106,19 +122,26 @@ function App() {
 
       <div>
         <label>Search Team</label>
-        <input type="text"></input>
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={(event) => {
+            setSearchTerm(event.target.value);
+          }}
+        ></input>
       </div>
 
       <TeamTable
-        teams={currentTeams}
+        teams={filteredCurrentTeams}
         labels={labels}
         handlePanel={handlePanel}
       />
 
       <TeamsPagination
-        teamsPerPage={currentTeams}
+        teamsPerPage={filteredCurrentTeams}
         totalTeams={teams.length}
         paginate={paginate}
+        searchTerm={searchTerm}
       />
 
       {game && (
@@ -133,7 +156,7 @@ function App() {
 
             <p>Team Full Name: {teamInfo && teamInfo[0]?.full_name}</p>
 
-            <p>Total Games in 2021: {game.length}</p>
+            <p>Total Games in 2021: {totalGames}</p>
 
             <h3>Random Game Details</h3>
             <div className="random_game_details">

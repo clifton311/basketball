@@ -26,8 +26,9 @@ function TeamTable({ teams, labels, handlePanel }) {
             return (
               <tr key={team.id} onClick={() => handleClick(team.id)}>
                 <td>{team.id}</td>
-                <td>{team.abbreviation}</td>
+                <td>{team.full_name}</td>
                 <td>{team.city}</td>
+                <td>{team.abbreviation}</td>
                 <td>{team.conference}</td>
                 <td>{team.division}</td>
               </tr>

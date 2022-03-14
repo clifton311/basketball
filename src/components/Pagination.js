@@ -1,26 +1,41 @@
 import React from 'react';
+import './Table.css';
 
-const TeamsPagination = ({ teamsPerPage, totalTeams, paginate }) => {
-  const pageNumbers = [1,2,3,4];
+const TeamsPagination = ({
+  teamsPerPage,
+  totalTeams,
+  paginate,
+  searchTerm,
+}) => {
+  const pageNumbers = [];
 
-  console.log('totalTeams', totalTeams)
-    console.log('teamsPerPage', teamsPerPage);
-  for (let i = 1; i <= Math.ceil(totalTeams/teamsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalTeams / teamsPerPage.length); i++) {
     pageNumbers.push(i);
   }
 
   return (
-    <nav>
-      <ul className="pagination">
-        {pageNumbers.map((number) => (
-          <li key={number} className="page-item">
-            <a href="!#" onClick={() => paginate(number)} className="page-link">
-              {number}
+    <div className='"paginate'>
+      <nav>
+        <ul className="pagination">
+          {searchTerm === '' && pageNumbers.map((number) => (
+            <li key={number} className="page-item">
+              <a
+                href="!#"
+                onClick={() => paginate(number)}
+                className="page-link"
+              >
+                {number}
+              </a>
+            </li>
+          ))}
+          {/* <li class="page-item">
+            <a class="page-link" href="#" onClick={() => paginate(number)}>
+              Next
             </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+          </li> */}
+        </ul>
+      </nav>
+    </div>
   );
 };
 
