@@ -24,15 +24,42 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.random_game_details {
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sliding-panel {
+  border: 1px solid black;
+  height: 100%;
+  background-color: aqua;
+  padding-left: 5rem;
+}
+
+.sliding-panel p {
+   display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+}
+
+.sliding-panel-header {
+  background-color: grey;
+}
+
+
+
+input[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    background-color: none;
+   
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    outline: none;
 }
