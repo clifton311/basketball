@@ -1,9 +1,9 @@
 table {
-  font-family: arial, sans-serif;
+ background-color: azure;
+ width: 70%;
+ margin-left: auto;
+margin-right: auto;
 
-  width: 70%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 td {
@@ -15,15 +15,20 @@ td {
 
 thead{
   background-color: blue;
-  color:white
+  color:white;
+  width: 500px;
 }
 
 tbody tr:hover{
   background-color: aqua;
 }
 
-.paginate {
-  display: flex;
-  justify-items: flex-end
+
+
+nav{
+    display: flex;
+  justify-items: center;
+  justify-content: center;
+  margin: 5rem;
 }
 

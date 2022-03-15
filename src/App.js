@@ -38,7 +38,7 @@ function App() {
 
   const getTeamInfo = async (id) => {
     const response = await fetch(
-      `https://www.balldontlie.io/api/v1/teams/${id}`
+      `${baseUrl}teams/${id}`
     );
     const json = await response.json();
     return Promise.all([json]).then((values) => {
@@ -83,7 +83,6 @@ function App() {
   const sort = (col) => {
     if (order === 'ASC') {
       const sorted = [...teams].sort((a, b) => (a[col] > b[col] ? 1 : -1));
-
       setTeams(sorted);
       setOrder('DSC');
     }
@@ -138,7 +137,7 @@ function App() {
         <label>Search Team</label>
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search Team..."
           value={searchTerm}
           onChange={(event) => {
             setSearchTerm(event.target.value);
@@ -173,7 +172,7 @@ function App() {
               </div>
             </div>
             <div className="game_details">
-              <div>Team Full Name: </div>
+              <div>Team Full Name:  </div>
               <div>{teamInfo && teamInfo[0]?.full_name}</div>
             </div>
             <div className="game_details">

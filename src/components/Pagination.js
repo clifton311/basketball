@@ -14,20 +14,21 @@ const TeamsPagination = ({
   }
 
   return (
-    <div className='"paginate'>
+    <div>
       <nav>
         <ul className="pagination">
-          {searchTerm === '' && pageNumbers.map((number) => (
-            <li key={number} className="page-item">
-              <a
-                href="!#"
-                onClick={() => paginate(number)}
-                className="page-link"
-              >
-                {number}
-              </a>
-            </li>
-          ))}
+          {searchTerm === '' &&
+            pageNumbers.map((number) => (
+              <li key={number} className="page-item">
+                <a
+                  href="!#"
+                  onClick={() => paginate(number)}
+                  className="page-link"
+                >
+                  {number}
+                </a>
+              </li>
+            ))}
           {/* <li class="page-item">
             <a class="page-link" href="#" onClick={() => paginate(number)}>
               Next
