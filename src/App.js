@@ -82,19 +82,14 @@ function App() {
 
   const sort = (col) => {
     if (order === 'ASC') {
-      const sorted = [...teams].sort((a, b) =>
-        a[col] > b[col] ? 1 : -1
-      );
+      const sorted = [...teams].sort((a, b) => (a[col] > b[col] ? 1 : -1));
 
-      console.log('sorted',sorted)
-      setTeams(sorted)
-      setOrder("DSC")
+      setTeams(sorted);
+      setOrder('DSC');
     }
 
     if (order === 'DSC') {
-      const sorted = [...teams].sort((a, b) =>
-        a[col] < b[col] ? 1 : -1
-      );
+      const sorted = [...teams].sort((a, b) => (a[col] < b[col] ? 1 : -1));
       setTeams(sorted);
       setOrder('ASC');
     }
@@ -117,9 +112,6 @@ function App() {
         <Spinner animation="border" />;
       </>
     );
-
-  console.log('game', game);
-  console.log('teamInfo', teamInfo);
 
   /////////////////// Pagination Logic //////////////
 
@@ -172,7 +164,7 @@ function App() {
       />
 
       {game && (
-        <SlidingPanel type={'right'} isOpen={openPanel} size={50}>
+        <SlidingPanel type={'right'} isOpen={openPanel} size={40}>
           <div className="sliding-panel">
             <div className="sliding-panel-header">
               <h3>{teamInfo[0]?.name} </h3>{' '}
@@ -180,23 +172,33 @@ function App() {
                 <b>X</b>
               </div>
             </div>
-
-            <p>Team Full Name: {teamInfo && teamInfo[0]?.full_name}</p>
-
-            <p>Total Games in 2021: {totalGames}</p>
-
-            <h3>Random Game Details</h3>
-            <div className="random_game_details">
-              <div className="random_game_items">
-                Date: <div>{game?.date?.split('T')[0]}</div>
-              </div>
-              <div>Home Team: {game?.home_team?.name}</div>
-              <div>Home Team Score: {game?.home_team_score}</div>
-              <div>Vistor Team: {game?.visitor_team?.name}</div>
-              <div>Vistor Team Score: {game?.visitor_team_score}</div>
+            <div className="game_details">
+              <div>Team Full Name: </div>
+              <div>{teamInfo && teamInfo[0]?.full_name}</div>
+            </div>
+            <div className="game_details">
+              <div>Total Games in 2021: </div>
+              <div>{totalGames}</div>
             </div>
 
-            <div className="random-details"></div>
+            <h4>Random Game Details:</h4>
+            <div className="random_game_details">
+              <div>
+                Date: <div className="date">{game?.date?.split('T')[0]}</div>
+              </div>
+              <div>
+                Home Team: <div>{game?.home_team?.name}</div>{' '}
+              </div>
+              <div>
+                Home Team Score: <div>{game?.home_team_score}</div>
+              </div>
+              <div>
+                Vistor Team: <div>{game?.visitor_team?.name}</div>
+              </div>
+              <div>
+                Vistor Team Score: <div>{game?.visitor_team_score}</div>
+              </div>
+            </div>
           </div>
         </SlidingPanel>
       )}

@@ -24,30 +24,23 @@
   color: white;
 } 
 
-.random_game_details {
-
-   padding-left: 5rem;
-  font-size: large;
-  padding-bottom: 5rem
+.game_details {
+ display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5rem;
 }
 
-
-.random_game_items  {
-  
- display:flex;
- flex-direction: row;
-}
-.random_game_items > div {
- margin-left: 5px
-}
-
-.random_game_details div {
+.random_game_details  div {
   display:flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
-  justify-content: space-around;
+  justify-content: space-between;
   font-size: large;
-  padding-bottom: 5rem
+  padding-bottom: 2rem;
+  margin-left: 5rem;
+  margin-right: 2rem;
+  font-weight: bold;
 }
 
 .sliding-panel {
@@ -67,9 +60,10 @@
 
 }
 
-.sliding-panel h3 {
+.sliding-panel h4 {
   text-align: left;
    padding-left: 5rem;
+  padding-bottom: 3rem;
    
 }
 
@@ -90,6 +84,10 @@
 input{
   margin: 25px;
 }
+
+
+
+
 
 
 

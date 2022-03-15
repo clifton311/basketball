@@ -4,14 +4,9 @@ import { Table } from 'react-bootstrap';
 
 function TeamTable({ teams, labels, handlePanel, sort }) {
 
-  console.log("labels", labels)
-
-  const handleClick = (id) => {
-    
-   
+  const handleClick = (id) => {   
     handlePanel(id)
   }
-
 
   return (
     <Table striped bordered hover>
