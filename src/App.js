@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import TeamTable from './components/Table';
 import TeamsPagination from './components/Pagination';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Form, Button } from 'react-bootstrap';
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import './App.css';
@@ -13,9 +13,11 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [openPanel, setOpenPanel] = useState(false);
 
+  const [order, setOrder] = useState('ASC');
+
   const [teamInfo, setTeamInfo] = useState([]);
   const [game, setGame] = useState([]);
-  const [totalGames, setTotalGames] = useState(0)
+  const [totalGames, setTotalGames] = useState(0);
 
   //state for pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,7 +49,7 @@ function App() {
   const getRandomNum = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); 
+    return Math.floor(Math.random() * (max - min) + min);
   };
 
   const getRandomGame = async (teamID, season = '2021') => {
@@ -56,7 +58,7 @@ function App() {
     );
     const json = await response.json();
     return Promise.all([json]).then((games) => {
-      setTotalGames(games[0].meta.total_count)
+      setTotalGames(games[0].meta.total_count);
 
       let randomGame = games[0].data[getRandomNum(1, games[0].data.length)];
       setGame(randomGame);
@@ -77,6 +79,26 @@ function App() {
     'Conference',
     'Division',
   ];
+
+  const sort = (col) => {
+    if (order === 'ASC') {
+      const sorted = [...teams].sort((a, b) =>
+        a[col] > b[col] ? 1 : -1
+      );
+
+      console.log('sorted',sorted)
+      setTeams(sorted)
+      setOrder("DSC")
+    }
+
+    if (order === 'DSC') {
+      const sorted = [...teams].sort((a, b) =>
+        a[col] < b[col] ? 1 : -1
+      );
+      setTeams(sorted);
+      setOrder('ASC');
+    }
+  };
 
   const handlePanel = (id) => {
     console.log(id);
@@ -99,42 +121,47 @@ function App() {
   console.log('game', game);
   console.log('teamInfo', teamInfo);
 
-
   /////////////////// Pagination Logic //////////////
+
   const indexOfLastTeam = currentPage * teamsPerPage;
   const indexOfFirstTeam = indexOfLastTeam - teamsPerPage;
   const filteredCurrentTeams = teams
     .filter((val) => {
       if (searchTerm === '') {
         return val;
-      } else if (val.full_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return val
+      } else if (
+        val.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) {
+        return val;
       }
     })
     .slice(indexOfFirstTeam, indexOfLastTeam);
-    console.log(filteredCurrentTeams)
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="App">
       <h1>NBA Teams</h1>
-
-      <div>
+      <Form>
         <label>Search Team</label>
         <input
           type="text"
           placeholder="Search..."
+          value={searchTerm}
           onChange={(event) => {
             setSearchTerm(event.target.value);
           }}
         ></input>
-      </div>
+        <Button variant="primary" className="btn">
+          Search
+        </Button>
+      </Form>
 
       <TeamTable
         teams={filteredCurrentTeams}
         labels={labels}
         handlePanel={handlePanel}
+        sort={sort}
       />
 
       <TeamsPagination

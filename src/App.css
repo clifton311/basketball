@@ -38,7 +38,6 @@
  flex-direction: row;
 }
 .random_game_items > div {
-
  margin-left: 5px
 }
 
@@ -47,7 +46,6 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-around;
- 
   font-size: large;
   padding-bottom: 5rem
 }
@@ -64,12 +62,15 @@
   flex-direction: column;
   align-items: flex-start;
    padding-left: 5rem;
+   margin-top: 4rem;
+   margin-bottom: 4rem;
 
 }
 
 .sliding-panel h3 {
   text-align: left;
    padding-left: 5rem;
+   
 }
 
 .sliding-panel-header {
@@ -80,12 +81,15 @@
   text-align: left;
 }
 
-.x{
+.x {
   cursor: pointer;
   margin-right:25px;
 }
 
 
+input{
+  margin: 25px;
+}
 
 
 

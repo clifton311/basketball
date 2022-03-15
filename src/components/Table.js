@@ -2,7 +2,9 @@ import React from 'react';
 import './Table.css'
 import { Table } from 'react-bootstrap';
 
-function TeamTable({ teams, labels, handlePanel }) {
+function TeamTable({ teams, labels, handlePanel, sort }) {
+
+  console.log("labels", labels)
 
   const handleClick = (id) => {
     
@@ -16,12 +18,11 @@ function TeamTable({ teams, labels, handlePanel }) {
       <thead>
         <tr>
           {labels.map((label, idx) => {
-            return <th key={idx}>{label}</th>;
+            return <th key={idx} onClick={() =>sort(label)}>{label}</th>;
           })}
         </tr>
       </thead>
       <tbody>
-        
           {teams && teams.map((team, index) => {
             return (
               <tr key={team.id} onClick={() => handleClick(team.id)}>
