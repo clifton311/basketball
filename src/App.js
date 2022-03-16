@@ -3,6 +3,7 @@ import TeamTable from './components/Table';
 import TeamsPagination from './components/Pagination';
 import { Spinner, Form, Button } from 'react-bootstrap';
 import SlidingPanel from 'react-sliding-side-panel';
+import { Search, XCircleFill } from 'react-bootstrap-icons';
 import 'react-sliding-side-panel/lib/index.css';
 import './App.css';
 
@@ -30,16 +31,14 @@ function App() {
 
   const getTeams = async () => {
     setLoading(true);
-    const response = await fetch(`${baseUrl}/teams`);
+    const response = await fetch(`${baseUrl}teams`);
     const json = await response.json();
     setLoading(false);
     return json;
   };
 
   const getTeamInfo = async (id) => {
-    const response = await fetch(
-      `${baseUrl}teams/${id}`
-    );
+    const response = await fetch(`${baseUrl}teams/${id}`);
     const json = await response.json();
     return Promise.all([json]).then((values) => {
       return values;
@@ -72,7 +71,6 @@ function App() {
   }, []);
 
   const labels = [
-    'ID',
     'Team Name',
     'City',
     'Abbreviation',
@@ -104,6 +102,10 @@ function App() {
     setOpenPanel(!openPanel);
   };
 
+  const handleClearInput = () => {
+    setSearchTerm('');
+  };
+
   if (loading)
     return (
       <>
@@ -128,25 +130,37 @@ function App() {
     })
     .slice(indexOfFirstTeam, indexOfLastTeam);
 
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="App">
-      <h1>NBA Teams</h1>
-      <Form>
-        <label>Search Team</label>
+      <h1>NBA TEAMS</h1>
+      <div className="searchInputs">
         <input
+          id="searchBar"
           type="text"
           placeholder="Search Team..."
           value={searchTerm}
           onChange={(event) => {
             setSearchTerm(event.target.value);
           }}
-        ></input>
-        <Button variant="primary" className="btn">
+        />
+        <div className="searchIcon">
+          {searchTerm === '' ? (
+            <Search />
+          ) : (
+            <XCircleFill
+              onClick={handleClearInput}
+              styles={{ cursor: 'pointer' }}
+            />
+          )}
+        </div>
+
+        {/* <Button variant="primary" className="btn">
           Search
-        </Button>
-      </Form>
+        </Button> */}
+      </div>
 
       <TeamTable
         teams={filteredCurrentTeams}
@@ -172,7 +186,7 @@ function App() {
               </div>
             </div>
             <div className="game_details">
-              <div>Team Full Name:  </div>
+              <div>Team Full Name: </div>
               <div>{teamInfo && teamInfo[0]?.full_name}</div>
             </div>
             <div className="game_details">

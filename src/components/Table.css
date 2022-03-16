@@ -1,5 +1,5 @@
 table {
- background-color: azure;
+ background-color: white;
  width: 70%;
  margin-left: auto;
 margin-right: auto;
@@ -7,7 +7,8 @@ margin-right: auto;
 }
 
 td {
-  border: 1px solid #dddddd;
+  border: 1px solid #ffff;
+  background-color: aliceblue;
   text-align: center;
   padding: 8px;
   cursor: pointer;
@@ -17,6 +18,7 @@ thead{
   background-color: blue;
   color:white;
   width: 500px;
+  text-align: center;
 }
 
 tbody tr:hover{

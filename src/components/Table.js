@@ -26,7 +26,7 @@ function TeamTable({ teams, labels, handlePanel, sort }) {
             teams.map((team, index) => {
               return (
                 <tr key={team.id} onClick={() => handleClick(team.id)}>
-                  <td>{team.id}</td>
+                
                   <td>{team.full_name} </td>
                   <td>{team.city}</td>
                   <td>{team.abbreviation}</td>
