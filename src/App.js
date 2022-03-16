@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import TeamTable from './components/Table';
 import TeamsPagination from './components/Pagination';
-import { Spinner, Form, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import SlidingPanel from 'react-sliding-side-panel';
 import { Search, XCircleFill } from 'react-bootstrap-icons';
 import 'react-sliding-side-panel/lib/index.css';
 import './App.css';
 
-const pageSize = 5;
 
 function App() {
   const [teams, setTeams] = useState([]);
@@ -22,7 +21,7 @@ function App() {
 
   //state for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [teamsPerPage, setTeamsPerPage] = useState(5);
+  const [teamsPerPage] = useState(5);
 
   //state for search
   const [searchTerm, setSearchTerm] = useState('');
@@ -93,7 +92,6 @@ function App() {
   };
 
   const handlePanel = (id) => {
-    console.log(id);
     getTeamInfo(id).then((info) => {
       setTeamInfo(info);
     });

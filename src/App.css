@@ -6,36 +6,23 @@
 }
 
 
-
-
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} 
-
 .game_details {
- display: flex;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 5rem 3rem 3rem 5rem
+  margin: 3rem 10rem 3rem 6rem;
+   font-weight: bold;
 }
 
-.random_game_details  div {
+.random_game_details div {
   display:flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-around;
   font-size: large;
   padding-bottom: 2rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  margin-left: 5px;
+  margin-right: 1rem;
   font-weight: bold;
 }
 
@@ -75,7 +62,6 @@
   cursor: pointer;
   margin-right:25px;
 }
-
 
 input{
   margin: 25px;
